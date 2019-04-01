@@ -9,6 +9,8 @@
 #define SEMAPHORE_MEMSIZE (sizeof(Semaphore)+sizeof(int))
 #define SEMAPHORE_BUFFER_SIZE MAX_NUM_SEMAPHORES*SEMAPHORE_MEMSIZE
 
+#define DSOS_ENOMEM 0xc1a00000
+
 static char _semaphores_buffer[SEMAPHORE_BUFFER_SIZE];
 static PoolAllocator _semaphores_allocator;
 

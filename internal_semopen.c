@@ -7,5 +7,12 @@
 #include "disastrOS_semdescriptor.h"
 
 void internal_semOpen(){
-  // do stuff :)
+	int semnum = running->syscall_args[0];
+	Semaphore *sem = Semaphore_alloc(semnum, 1);
+	if (!sem)
+		running->syscall_retvalue = DSOS_ENOMEM;
+	// Need to check for errors here v
+	List_insert(semaphoress_list, semaphors_list->last, sem);
+	running->syscall_retvalue = semnum;
+	return;
 }

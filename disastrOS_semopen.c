@@ -7,5 +7,6 @@
 #include "disastrOS_semdescriptor.h"
 
 void internal_semOpen(){
-  // do stuff :)
+
 }
+
