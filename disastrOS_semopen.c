@@ -24,7 +24,7 @@ void internal_semOpen(){
 		return;
 	}
 
-	SemDescriptor *des = SemdDescriptor_alloc(running->last_fd, sem, running);
+	SemDescriptor *des = SemDescriptor_alloc(running->last_fd, sem, running);
 	if (!des) {
 		running->syscall_retvalue = DSOS_ESEMNOFD;
 		return;

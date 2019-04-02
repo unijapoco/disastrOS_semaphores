@@ -2,7 +2,9 @@
 #include "linked_list.h"
 #include "disastrOS_pcb.h"
 
-#define DSOS_ENOMEM 0xc1400000
+#define DSOS_ENOMEM -0xc1400000
+#define DSOS_EINVAL -0xc1400001
+#define DSOS_ESEMNOFD -0xc140002
 
 typedef struct {
   ListItem list;
