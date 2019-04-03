@@ -4,7 +4,9 @@
 
 #define DSOS_ENOMEM -0xc1400000
 #define DSOS_EINVAL -0xc1400001
-#define DSOS_ESEMNOFD -0xc140002
+#define DSOS_ESEMNOFD -0xc1400002
+#define DSOS_ENOEX -0xc1400003
+#define DSOS_ENOPER -0xc1400004
 
 typedef struct {
   ListItem list;
