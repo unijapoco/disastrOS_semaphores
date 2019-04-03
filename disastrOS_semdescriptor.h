@@ -29,3 +29,5 @@ void SemDescriptorList_print(ListHead* l);
 SemDescriptorPtr* SemDescriptorPtr_alloc(SemDescriptor* descriptor);
 int SemDescriptorPtr_free(SemDescriptorPtr* d);
 void SemDescriptorPtrList_print(ListHead* l);
+
+SemDescriptorPtr *SemDescriptorPtr_byPID(ListHead *l, int pid);

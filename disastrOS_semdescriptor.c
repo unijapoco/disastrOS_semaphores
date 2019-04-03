@@ -106,7 +106,7 @@ void SemDescriptorPtrList_print(ListHead* l){
   printf("]");
 }
 
-SemDescriptorPtr *SemDescriptorPtrList_byPID(ListHead *l, int pid) {
+SemDescriptorPtr *SemDescriptorPtr_byPID(ListHead *l, int pid) {
 	ListItem *aux = l->first;
 	while (aux) {
 		SemDescriptorPtr *d = (SemDescriptorPtr *)aux;
