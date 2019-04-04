@@ -15,7 +15,7 @@ void internal_semPost(){
 		return;
 	}
 
-	SemDescriptorPtr *desptr = SemDescriptorList_byPID(&sem->descriptors, running->pid);
+	SemDescriptorPtr *desptr = SemDescriptorPtr_byPID(&sem->descriptors, running->pid);
 	if (!sem) {
 		running->syscall_retvalue = DSOS_ENOPER;
 		return;
@@ -24,8 +24,8 @@ void internal_semPost(){
 	sem->count++;
 	if (sem->count == (0 + 1) && sem->waiting_descriptors.first) {
 		List_detach(&sem->waiting_descriptors, (ListItem *)desptr);
-		next_proc = desptr->descriptor->pcb;
-		List_detach(&waiting_list, next_proc);
+		PCB *next_proc = desptr->descriptor->pcb;
+		List_detach(&waiting_list, (ListItem *)next_proc);
 
 		running->status = Ready;
 		List_insert(&ready_list, ready_list.last, (ListItem *)running);

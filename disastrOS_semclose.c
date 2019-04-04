@@ -15,20 +15,20 @@ void internal_semClose(){
 		return;
 	}
 
-	SemDescriptorPtr *desptr = SemDescriptorList_byPID(&sem->descriptors, running->pid);
+	SemDescriptorPtr *desptr = SemDescriptorPtr_byPID(&sem->descriptors, running->pid);
 	if (!sem) {
 		running->syscall_retvalue = DSOS_ENOPER;
 		return;
 	}
 
-	SemDescriptor *des = ListDetach(&running->sem_descriptors, (ListItem *)desptr->descriptor);
+	SemDescriptor *des = (SemDescriptor *)List_detach(&running->sem_descriptors, (ListItem *)desptr->descriptor);
 
 	desptr = (SemDescriptorPtr *)List_detach(&sem->descriptors, (ListItem *)desptr);
-	SemDescriptor_free(des)
-	SemDescriptorPtr_free(desptr)
+	SemDescriptor_free(des);
+	SemDescriptorPtr_free(desptr);
 
 	//if the semaphores has no more descriptors, i.e. it's not open in any process we destroy it
-	if (!sem->descriptors->size) {
+	if (!sem->descriptors.size) {
 		sem = (Semaphore *)List_detach(&semaphores_list, (ListItem *)sem);
 		Semaphore_free(sem);
 	}

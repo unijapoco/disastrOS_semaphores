@@ -15,7 +15,7 @@ void internal_semWait(){
 		return;
 	}
 
-	SemDescriptorPtr *desptr = SemDescriptorList_byPID(&sem->descriptors, running->pid);
+	SemDescriptorPtr *desptr = SemDescriptorPtr_byPID(&sem->descriptors, running->pid);
 	if (!sem) {
 		running->syscall_retvalue = DSOS_ENOPER;
 		return;
@@ -27,7 +27,7 @@ void internal_semWait(){
 		return;
 	}
 
-	List_insert(&sem->waiting_descriptors, sem->waiting_descriptors.last, (Listitem *)desptr);
+	List_insert(&sem->waiting_descriptors, sem->waiting_descriptors.last, (ListItem *)desptr);
 	running->status = Waiting;
 	List_insert(&waiting_list, waiting_list.last, (ListItem *)running);
 	if (ready_list.first) {

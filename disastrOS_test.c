@@ -4,6 +4,7 @@
 
 #include "disastrOS.h"
 
+
 // we need this to handle the sleep state
 void sleeperFunction(void* args){
   printf("Hello, I am the sleeper, and I sleep %d\n",disastrOS_getpid());
@@ -34,7 +35,7 @@ void initFunction(void* args) {
   disastrOS_printStatus();
   printf("hello, I am init and I just started\n");
   disastrOS_spawn(sleeperFunction, 0);
-  
+
 
   printf("I feel like to spawn 10 nice threads\n");
   int alive_children=0;
@@ -52,7 +53,7 @@ void initFunction(void* args) {
   disastrOS_printStatus();
   int retval;
   int pid;
-  while(alive_children>0 && (pid=disastrOS_wait(0, &retval))>=0){ 
+  while(alive_children>0 && (pid=disastrOS_wait(0, &retval))>=0){
     disastrOS_printStatus();
     printf("initFunction, child: %d terminated, retval:%d, alive: %d \n",
 	   pid, retval, alive_children);
@@ -60,6 +61,22 @@ void initFunction(void* args) {
   }
   printf("shutdown!");
   disastrOS_shutdown();
+}
+
+void sem_test1(void *args) {
+	int semnum = disastrOS_semOpen(0);
+  disastrOS_printStatus();
+	disastrOS_semClose(semnum);
+  disastrOS_printStatus();
+  disastrOS_exit(disastrOS_getpid()+1);
+}
+
+void my_init(void *args) {
+	disastrOS_printStatus();
+	disastrOS_spawn(sem_test1, 0);
+	int retval;
+	disastrOS_wait(0, &retval);
+	disastrOS_shutdown();
 }
 
 int main(int argc, char** argv){
@@ -73,6 +90,6 @@ int main(int argc, char** argv){
   printf("the function pointer is: %p", childFunction);
   // spawn an init process
   printf("start\n");
-  disastrOS_start(initFunction, 0, logfilename);
+  disastrOS_start(my_init, 0, logfilename);
   return 0;
 }
