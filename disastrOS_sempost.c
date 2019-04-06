@@ -16,7 +16,7 @@ void internal_semPost(){
 	}
 
 	SemDescriptorPtr *desptr = SemDescriptorPtr_byPID(&sem->descriptors, running->pid);
-	if (!sem) {
+	if (!desptr) {
 		running->syscall_retvalue = DSOS_ENOPER;
 		return;
 	}

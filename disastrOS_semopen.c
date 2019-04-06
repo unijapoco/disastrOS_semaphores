@@ -9,6 +9,7 @@
 void internal_semOpen(){
 	int semnum = running->syscall_args[0];
 	if (semnum < 0) {
+		// semaphore id must be positive!
 		running->syscall_retvalue = DSOS_EINVAL;
 		return;
 	}

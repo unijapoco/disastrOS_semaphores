@@ -16,7 +16,7 @@ void internal_semWait(){
 	}
 
 	SemDescriptorPtr *desptr = SemDescriptorPtr_byPID(&sem->descriptors, running->pid);
-	if (!sem) {
+	if (!desptr) {
 		running->syscall_retvalue = DSOS_ENOPER;
 		return;
 	}
@@ -33,9 +33,7 @@ void internal_semWait(){
 	if (ready_list.first) {
 		running = (PCB *)List_detach(&ready_list, ready_list.first);
 	} else {
-		running = 0;
-		printf("Everyone's asleep\n");
-		disastrOS_printStatus();
+		// you don't end in here
 	}
 	running->syscall_retvalue = 0;
 	return;
