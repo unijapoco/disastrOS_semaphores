@@ -22,9 +22,12 @@ void internal_semPost(){
 	}
 
 	sem->count++;
-	if (sem->count == (0 + 1) && sem->waiting_descriptors.first) {
-		List_detach(&sem->waiting_descriptors, (ListItem *)desptr);
-		PCB *next_proc = desptr->descriptor->pcb;
+	if (sem->waiting_descriptors.first) {
+		sem->count--;
+		SemDescriptorPtr *d = (SemDescriptorPtr *)sem->waiting_descriptors.first;
+		List_detach(&sem->waiting_descriptors, (ListItem *)d);
+		PCB *next_proc = d->descriptor->pcb;
+		SemDescriptorPtr_free(d);
 		List_detach(&waiting_list, (ListItem *)next_proc);
 
 		running->status = Ready;
