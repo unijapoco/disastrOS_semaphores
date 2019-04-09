@@ -122,11 +122,6 @@ int main(int argc, char** argv){
   if (argc>1) {
     logfilename=argv[1];
   }
-  // we create the init process processes
-  // the first is in the running variable
-  // the others are in the ready queue
-  printf("the function pointer is: %p", childFunction);
-  // spawn an init process
   printf("start\n");
   disastrOS_start(my_init, 0, logfilename);
   return 0;
