@@ -27,7 +27,8 @@ void internal_semWait(){
 		return;
 	}
 
-	List_insert(&sem->waiting_descriptors, sem->waiting_descriptors.last, (ListItem *)desptr);
+	SemDescriptorPtr *waiting_desptr = SemDescriptorPtr_alloc(desptr->descriptor);
+	List_insert(&sem->waiting_descriptors, sem->waiting_descriptors.last, (ListItem *)waiting_desptr);
 	running->status = Waiting;
 	List_insert(&waiting_list, waiting_list.last, (ListItem *)running);
 	if (ready_list.first) {
